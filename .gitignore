@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/perf_tests/.vs/perf_tests/v15
+/perf_tests/x64
