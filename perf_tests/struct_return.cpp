@@ -36,19 +36,35 @@ BENCHMARK(empty_struct_ret);
 auto filled_struct_ret = struct_fun<status, bad_return_status>;
 BENCHMARK(filled_struct_ret);
 
-int ds_rank(status* ret)
+int ds_rank_good(status* ret)
 {
   return 1;
 }
 
+int ds_rank_bad(status* ret)
+{
+  if (ret != nullptr)
+  {
+    ret->err_code = 1;
+    ret->err_msg = "This is an error";
+  }
+
+  return 1;
+}
+
+template<int FN(status*)>
 static void ext_struct_alloc(benchmark::State& state)
 {
   status s;
   int ret;
   for (auto _ : state)
   {
-    benchmark::DoNotOptimize(ret = ds_rank(&s));
+    benchmark::DoNotOptimize(ret = FN(&s));
   }
 }
 
-BENCHMARK(ext_struct_alloc);
+auto ext_struct_alloc_good = ext_struct_alloc<ds_rank_good>;
+BENCHMARK(ext_struct_alloc_good);
+
+auto ext_struct_alloc_bad = ext_struct_alloc<ds_rank_bad>;
+BENCHMARK(ext_struct_alloc_bad);
