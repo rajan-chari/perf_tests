@@ -29,5 +29,8 @@
     <ClCompile Include="struct_return.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="unique_insert_perf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

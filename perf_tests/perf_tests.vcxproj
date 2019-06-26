@@ -157,6 +157,7 @@
     <ClCompile Include="exception_perf.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="struct_return.cpp" />
+    <ClCompile Include="unique_insert_perf.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
