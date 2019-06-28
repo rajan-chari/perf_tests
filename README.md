@@ -1,35 +1,28 @@
 # perf_tests
 
 ```text
-Run on (8 X 2112 MHz CPU s)
-05/03/18 08:33:54
--------------------------------------------------------------
-Benchmark                      Time           CPU Iterations
--------------------------------------------------------------
-int_ret_fun                    1 ns          1 ns  497777778
-int_ex_fun                  1517 ns       1496 ns     407273
-int_no_ex_fun                  1 ns          1 ns  448000000
-str_ret_fun                   50 ns         50 ns   10000000
-str_no_ex_fun                 47 ns         48 ns   15448276
-str_ex_fun                  1601 ns       1604 ns     448000
-empty_struct_ret               6 ns          6 ns  112000000
-filled_struct_ret             51 ns         50 ns   11200000
-ext_struct_alloc_good          1 ns          1 ns  560000000
-ext_struct_alloc_bad           3 ns          3 ns  213333333
-```
+Run on (56 X 2400 MHz CPU s)
+CPU Caches:
+  L1 Data 32K (x28)
+  L1 Instruction 32K (x28)
+  L2 Unified 256K (x28)
+  L3 Unified 35840K (x2)
+Load Average: 0.14, 0.34, 0.33
+***WARNING*** CPU scaling is enabled, the benchmark real time measurements may be noisy and will incur extra overhead.
+------------------------------------------------------------------------------
+Benchmark                                    Time             CPU   Iterations
+------------------------------------------------------------------------------
+function_returning_int                   0.418 ns        0.418 ns   1000000000
+function_throwing_int                     1849 ns         1849 ns       379129
+throwing_function_returning_int          0.418 ns        0.418 ns   1000000000
+function_returning_string                 21.4 ns         21.4 ns     32686348
+function_throwing_string                  2781 ns         2781 ns       254596
+throwing_function_returning_string        19.2 ns         19.2 ns     36396542
+return_empty_struct                       4.18 ns         4.18 ns    167301886
+return_filled_struct                      21.9 ns         21.9 ns     32291710
+external_struct_alloc_return_normal      0.418 ns        0.418 ns   1000000000
+external_struct_alloc_return_error        9.20 ns         9.20 ns     76105341
 
-| Use case              | returns       | throws | caller try/catch | Notes                   |
-|-----------------------|---------------|--------|------------------|-------------------------|
-| int_ret_fun           | int           | no     | no               | returns int             |
-| int_ex_fun            | int           | int    | yes              | throws int              |
-| int_no_ex_fun         | int           | no     | yes              | try/catch no throw      |
-| str_ret_fun           | string        | no     | no               | returns string          |
-| str_no_ex_fun         | string        | no     | yes              | try/catch no throw      |
-| str_ex_fun            | string        | string | yes              | throw string            |
-| empty_struct_ret      | empty struct  | no     | no               | return an empty struct  |
-| filled_struct_ret     | filled struct | no     | no               | return a filled struct  |
-| ext_struct_alloc_good | int           | no     | no               | caller allocated struct |
-| ext_struct_alloc_bad  | int           | no     | no               | caller allocated struct |
 
 ## Build
 
