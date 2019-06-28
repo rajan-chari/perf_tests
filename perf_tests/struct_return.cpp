@@ -30,11 +30,11 @@ static void struct_fun(benchmark::State& state)
   }
 }
 
-auto empty_struct_ret = struct_fun<status, good_return_status>;
-BENCHMARK(empty_struct_ret);
+auto return_empty_struct = struct_fun<status, good_return_status>;
+BENCHMARK(return_empty_struct);
 
-auto filled_struct_ret = struct_fun<status, bad_return_status>;
-BENCHMARK(filled_struct_ret);
+auto return_filled_struct = struct_fun<status, bad_return_status>;
+BENCHMARK(return_filled_struct);
 
 int ds_rank_good(status* ret)
 {
@@ -63,8 +63,8 @@ static void ext_struct_alloc(benchmark::State& state)
   }
 }
 
-auto ext_struct_alloc_good = ext_struct_alloc<ds_rank_good>;
-BENCHMARK(ext_struct_alloc_good);
+auto external_struct_alloc_return_normal = ext_struct_alloc<ds_rank_good>;
+BENCHMARK(external_struct_alloc_return_normal);
 
-auto ext_struct_alloc_bad = ext_struct_alloc<ds_rank_bad>;
-BENCHMARK(ext_struct_alloc_bad);
+auto external_struct_alloc_return_error = ext_struct_alloc<ds_rank_bad>;
+BENCHMARK(external_struct_alloc_return_error);
