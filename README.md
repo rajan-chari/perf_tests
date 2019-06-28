@@ -22,7 +22,7 @@ return_empty_struct                       4.18 ns         4.18 ns    167301886
 return_filled_struct                      21.9 ns         21.9 ns     32291710
 external_struct_alloc_return_normal      0.418 ns        0.418 ns   1000000000
 external_struct_alloc_return_error        9.20 ns         9.20 ns     76105341
-
+```
 
 ## Build
 
@@ -35,3 +35,5 @@ rm -rf build && mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release &
 ```
 
 ### Windows
+
+build project from solution file in Visual Studio 2017
