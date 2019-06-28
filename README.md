@@ -31,6 +31,14 @@ ext_struct_alloc_bad           3 ns          3 ns  213333333
 | ext_struct_alloc_good | int           | no     | no               | caller allocated struct |
 | ext_struct_alloc_bad  | int           | no     | no               | caller allocated struct |
 
-Build:
-install vcpkg
+## Build
 
+### Linux
+
+```text
+install vcpkg
+vcpkg install benchmark --triplet x64-linux
+rm -rf build && mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make -j && ./perf_test && cd ..
+```
+
+### Windows
