@@ -1,0 +1,3 @@
+[submodule "sub/vw_master"]
+	path = sub/vw_master
+	url = https://github.com/VowpalWabbit/vowpal_wabbit.git
