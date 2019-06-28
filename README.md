@@ -28,12 +28,26 @@ external_struct_alloc_return_error        9.20 ns         9.20 ns     76105341
 
 ### Linux
 
+- install vcpkg
+
 ```text
-install vcpkg
+
 vcpkg install benchmark --triplet x64-linux
+git clone https://github.com/rajan-chari/perf_tests.git
+cd perf_tests
+git submodule update --init --recursive
 rm -rf build && mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make -j && ./perf_test && cd ..
 ```
 
 ### Windows
 
-build project from solution file in Visual Studio 2017
+- install vcpkg
+
+```text
+vcpkg install benchmark --triplet x64-linux
+git clone https://github.com/rajan-chari/perf_tests.git
+cd perf_tests
+git submodule update --init --recursive
+```
+
+- build project from solution file in Visual Studio 2017
