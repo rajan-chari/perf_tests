@@ -1,6 +1,6 @@
 # perf_tests
 
-```
+```text
 Run on (8 X 2112 MHz CPU s)
 05/03/18 08:33:54
 -------------------------------------------------------------
@@ -17,6 +17,7 @@ filled_struct_ret             51 ns         50 ns   11200000
 ext_struct_alloc_good          1 ns          1 ns  560000000
 ext_struct_alloc_bad           3 ns          3 ns  213333333
 ```
+
 | Use case              | returns       | throws | caller try/catch | Notes                   |
 |-----------------------|---------------|--------|------------------|-------------------------|
 | int_ret_fun           | int           | no     | no               | returns int             |
@@ -29,3 +30,7 @@ ext_struct_alloc_bad           3 ns          3 ns  213333333
 | filled_struct_ret     | filled struct | no     | no               | return a filled struct  |
 | ext_struct_alloc_good | int           | no     | no               | caller allocated struct |
 | ext_struct_alloc_bad  | int           | no     | no               | caller allocated struct |
+
+Build:
+install vcpkg
+
