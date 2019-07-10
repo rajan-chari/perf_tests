@@ -13,6 +13,9 @@ add_executable(perf_tests
     perf_tests/struct_return.cpp
     perf_tests/expected.cpp
     perf_tests/unique_insert_perf.cpp
+    perf_tests/error_code.cpp
+    perf_tests/expected_perf.cpp
+    perf_tests/error_code_common.cpp
 )
 
 target_link_libraries(perf_tests PRIVATE benchmark::benchmark benchmark::benchmark_main)
