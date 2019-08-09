@@ -584,6 +584,30 @@ static void v_hashmap_get_values(benchmark::State & state)
     map.clear();
 }
 
+static void v_hashmap_get_values_string(benchmark::State & state)
+{
+    v_map_string map;
+    map.set_equivalent([](const std::string & a, const std::string & b) -> bool {return a == b;});
+    for(size_t i = 0; i < inputs.size(); ++i){
+        add_map_entry_vhashmap_no_replace(map, inputs[i], i+1);
+    }
+
+    substring ss;
+    uint64_t hash;
+    int val;
+    for(auto _ : state){
+        for(const auto & str : inputs)
+        {
+            hash = uniform_hash(str.c_str(), str.length(), 378401);
+            benchmark::DoNotOptimize(val = map.get(str, hash));
+        }
+        benchmark::ClobberMemory();
+    }
+    destruct_v_hashmap_entry(map);
+    map.clear();
+}
+
+
 static void g_densemap_get_values(benchmark::State & state)
 {
     g_densemap map;
@@ -637,6 +661,7 @@ BENCHMARK(insert_and_clear_g_densemap_small);
 BENCHMARK(insert_and_clear_std_hashmap_small);
 
 BENCHMARK(v_hashmap_get_values);
+BENCHMARK(v_hashmap_get_values_string);
 BENCHMARK(g_densemap_get_values);
 BENCHMARK(std_hashmap_get_values);
 
