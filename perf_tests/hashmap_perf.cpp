@@ -659,7 +659,6 @@ BENCHMARK(insert_and_clear_v_hashmap_small_string);
 BENCHMARK(insert_and_clear_v_hashmap_small_nohash);
 BENCHMARK(insert_and_clear_g_densemap_small);
 BENCHMARK(insert_and_clear_std_hashmap_small);
-
 BENCHMARK(v_hashmap_get_values);
 BENCHMARK(v_hashmap_get_values_string);
 BENCHMARK(g_densemap_get_values);
