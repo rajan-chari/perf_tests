@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE "Release")
 
 project(perf_tests CXX)
 
@@ -35,3 +35,4 @@ add_executable(perf_tests
 )
 
 target_link_libraries(perf_tests PRIVATE benchmark::benchmark benchmark::benchmark_main)
+target_compile_options(perf_tests PUBLIC "-O3")

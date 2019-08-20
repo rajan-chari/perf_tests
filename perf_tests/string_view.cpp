@@ -329,11 +329,15 @@ using boost::string_view;
 static void substring_from_string(benchmark::State & state)
 {
     char * begin;
+    char * end;
+    size_t len;
     for(auto _ : state){
         for(const auto & str : inputs)
         {
             substring ss = {const_cast<char*>(str.c_str()), const_cast<char*>(str.c_str())+str.length()};
             benchmark::DoNotOptimize(begin = ss.begin);
+            benchmark::DoNotOptimize(end = ss.end);
+            benchmark::DoNotOptimize(len = ss.end - ss.begin);
             benchmark::ClobberMemory();
         }
     }
@@ -342,11 +346,15 @@ static void substring_from_string(benchmark::State & state)
 static void string_view_from_string(benchmark::State & state)
 {
     const char * begin;
+    const char * end;
+    size_t len;
     for(auto _ : state){
         for(const auto & str : inputs)
         {
             string_view sv(str);
             benchmark::DoNotOptimize(begin = sv.begin());
+            benchmark::DoNotOptimize(end = sv.end());
+            benchmark::DoNotOptimize(len = sv.length());
             benchmark::ClobberMemory();
         }
     }
@@ -356,6 +364,8 @@ static void string_view_from_string(benchmark::State & state)
 static void substring_from_string_prefix_suffix(benchmark::State & state)
 {
     char * begin;
+    char * end;
+    size_t len;
     for(auto _ : state){
         for(const auto & str : inputs)
         {
@@ -369,6 +379,8 @@ static void substring_from_string_prefix_suffix(benchmark::State & state)
                 ss.end -= 2;
             }
             benchmark::DoNotOptimize(begin = ss.begin);
+            benchmark::DoNotOptimize(end = ss.end);
+            benchmark::DoNotOptimize(len = ss.end - ss.begin);
             benchmark::ClobberMemory();
         }
     }
@@ -378,6 +390,8 @@ static void substring_from_string_prefix_suffix(benchmark::State & state)
 static void string_view_from_string_prefix_suffix(benchmark::State & state)
 {
     const char * begin;
+    const char * end;
+    size_t len;
     for(auto _ : state){
         for(const auto & str : inputs)
         {
@@ -386,20 +400,8 @@ static void string_view_from_string_prefix_suffix(benchmark::State & state)
             sv.remove_prefix(2);
             sv.remove_suffix(2);
             benchmark::DoNotOptimize(begin = sv.begin());
-            benchmark::ClobberMemory();
-        }
-    }
-}
-
-static void string_view_from_string_prefix_suffix2(benchmark::State & state)
-{
-    const char * begin;
-    for(auto _ : state){
-        for(const auto & str : inputs)
-        {
-            const char * b = str.length() >= 2 ? str.c_str()+2 : str.c_str();
-            string_view sv(b, str.length() - 4);
-            benchmark::DoNotOptimize(begin = sv.begin());
+            benchmark::DoNotOptimize(end = sv.end());
+            benchmark::DoNotOptimize(len = sv.length());
             benchmark::ClobberMemory();
         }
     }
@@ -408,6 +410,8 @@ static void string_view_from_string_prefix_suffix2(benchmark::State & state)
 static void substring_from_string_copy(benchmark::State & state)
 {
     char * begin;
+    char * end;
+    size_t len;
     for(auto _ : state){
         for(const auto & str : inputs)
         {
@@ -416,6 +420,8 @@ static void substring_from_string_copy(benchmark::State & state)
             ss.end = ss.begin + str.length()+1;
             memcpy(ss.begin, str.c_str(), str.length());
             benchmark::DoNotOptimize(begin = ss.begin);
+            benchmark::DoNotOptimize(end = ss.end);
+            benchmark::DoNotOptimize(len = ss.end - ss.begin);
             free(ss.begin);
             benchmark::ClobberMemory();
         }
@@ -425,12 +431,18 @@ static void substring_from_string_copy(benchmark::State & state)
 static void string_from_string(benchmark::State & state)
 {
     const char * begin;
+    const char * end;
+    size_t len;
     for(auto _ : state){
         for(const auto & str : inputs)
         {
-            std::string s(str);
-            benchmark::DoNotOptimize(begin = &*s.begin());
-            benchmark::ClobberMemory();
+            {
+                std::string s(str);
+                benchmark::DoNotOptimize(begin = &*s.begin());
+                benchmark::DoNotOptimize(end = &*s.end());
+                benchmark::DoNotOptimize(len = s.length());
+                benchmark::ClobberMemory();
+            }
         }
     }
 }
@@ -439,6 +451,8 @@ static void string_from_string(benchmark::State & state)
 static void substring_to_substring(benchmark::State & state)
 {
     char * begin;
+    char * end;
+    size_t len;
     std::vector<substring> ss_vector;
     ss_vector.reserve(inputs.size());
     for(const auto & str : inputs)
@@ -450,6 +464,8 @@ static void substring_to_substring(benchmark::State & state)
         for(const auto & ss : ss_vector){
             substring ss2 = ss;
             benchmark::DoNotOptimize(begin = ss2.begin);
+            benchmark::DoNotOptimize(end = ss2.end);
+            benchmark::DoNotOptimize(len = ss2.end - ss2.begin);
             benchmark::ClobberMemory();
         }
     }
@@ -458,6 +474,8 @@ static void substring_to_substring(benchmark::State & state)
 static void string_view_to_string_view(benchmark::State & state)
 {
     const char * begin;
+    const char * end;
+    size_t len;
     std::vector<string_view> sv_vector;
     sv_vector.reserve(inputs.size());
     for(const auto & str : inputs)
@@ -468,6 +486,8 @@ static void string_view_to_string_view(benchmark::State & state)
         for(const auto & sv : sv_vector){
             string_view sv2(sv);
             benchmark::DoNotOptimize(begin = sv2.begin());
+            benchmark::DoNotOptimize(end = sv2.end());
+            benchmark::DoNotOptimize(len = sv2.length());
             benchmark::ClobberMemory();
         }
     }
@@ -511,11 +531,45 @@ static void string_view_to_string(benchmark::State & state)
 }
 
 
+static void substring_compare(benchmark::State & state)
+{
+    bool eq;
+    std::vector<substring> ss_vector;
+    ss_vector.resize(inputs.size());
+    for(const auto & str : inputs)
+    {
+        substring ss = {const_cast<char*>(str.c_str()), const_cast<char*>(str.c_str())+str.length()};
+        ss_vector.push_back(ss);
+    }
+    for(auto _ : state){
+        for(const auto & ss : ss_vector){
+            benchmark::DoNotOptimize(eq = substring_equal(ss, "repetition"));
+            benchmark::ClobberMemory();
+        }
+    }
+}
+
+static void string_view_compare(benchmark::State & state)
+{
+    bool eq;
+    std::vector<string_view> sv_vector;
+    sv_vector.resize(inputs.size());
+    for(const auto & str : inputs)
+    {
+        sv_vector.emplace_back(str);
+    }
+    for(auto _ : state){
+        for(const auto & sv : sv_vector){
+            benchmark::DoNotOptimize(eq = (sv == "repetition"));
+            benchmark::ClobberMemory();
+        }
+    }
+}
+
 BENCHMARK(substring_from_string);
 BENCHMARK(string_view_from_string);
 BENCHMARK(substring_from_string_prefix_suffix);
 BENCHMARK(string_view_from_string_prefix_suffix);
-BENCHMARK(string_view_from_string_prefix_suffix2);
 BENCHMARK(substring_from_string_copy);
 BENCHMARK(string_from_string);
 
@@ -523,3 +577,5 @@ BENCHMARK(substring_to_substring);
 BENCHMARK(string_view_to_string_view);
 BENCHMARK(substring_to_string);
 BENCHMARK(string_view_to_string);
+BENCHMARK(substring_compare);
+BENCHMARK(string_view_compare);
