@@ -41,21 +41,15 @@ struct result
   string msg;
 };
 
-auto function_returning_int = ret_handler_fun<int, ret_fun<int, 1>>;
-BENCHMARK(function_returning_int);
-
-auto function_throwing_int = ex_handler_fun<int, ex_fun<int, 1>>;
-BENCHMARK(function_throwing_int);
-
-auto throwing_function_returning_int = ex_handler_fun<int, ret_fun<int, 1>>;
-BENCHMARK(throwing_function_returning_int);
-
-auto function_returning_string = ret_handler_fun<string, s_ret_fun>;
-BENCHMARK(function_returning_string);
-
-auto function_throwing_string = ex_handler_fun<string, s_throw_fun>;
-BENCHMARK(function_throwing_string);
-
-auto throwing_function_returning_string = ex_handler_fun<string, s_ret_fun>;
-BENCHMARK(throwing_function_returning_string);
-
+//auto function_returning_int = ret_handler_fun<int, ret_fun<int, 1>>;
+//BENCHMARK(function_returning_int);
+//auto function_throwing_int = ex_handler_fun<int, ex_fun<int, 1>>;
+//BENCHMARK(function_throwing_int);
+//auto throwing_function_returning_int = ex_handler_fun<int, ret_fun<int, 1>>;
+//BENCHMARK(throwing_function_returning_int);
+//auto function_returning_string = ret_handler_fun<string, s_ret_fun>;
+//BENCHMARK(function_returning_string);
+//auto function_throwing_string = ex_handler_fun<string, s_throw_fun>;
+//BENCHMARK(function_throwing_string);
+//auto throwing_function_returning_string = ex_handler_fun<string, s_ret_fun>;
+//BENCHMARK(throwing_function_returning_string);
