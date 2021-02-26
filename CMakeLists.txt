@@ -24,6 +24,13 @@ set(vw_source
 
 add_executable(perf_tests
     perf_tests/main.cpp
+    perf_tests/exception_perf.cpp
+    perf_tests/struct_return.cpp
+    perf_tests/expected.cpp
+    perf_tests/unique_insert_perf.cpp
+    perf_tests/error_code.cpp
+    perf_tests/expected_perf.cpp
+    perf_tests/error_code_common.cpp
 #    perf_tests/hashmap_perf.cpp
     perf_tests/string_view.cpp
     sub/vw_master/vowpalwabbit/parse_primitives.cc
